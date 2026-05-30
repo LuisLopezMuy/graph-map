@@ -1,0 +1,32 @@
+{
+  "1": {
+    "id": 1,
+    "x": 100,
+    "y": 100,
+    "color": "#0000ffff",
+    "cityCode": "GT1",
+    "cityName": "Guatemala",
+    "cityDepartment": "Guatemala",
+    "cityPopulation": 10000
+  },
+  "2": {
+    "id": 2,
+    "x": 300,
+    "y": 500,
+    "color": "#0000ffff",
+    "cityCode": "GT2",
+    "cityName": "Escuintla",
+    "cityDepartment": "Escuintla",
+    "cityPopulation": 10000
+  },
+  "3": {
+    "id": 3,
+    "x": 1000,
+    "y": 600,
+    "color": "#0000ffff",
+    "cityCode": "GT3",
+    "cityName": "Quetzaltenango",
+    "cityDepartment": "Quetzaltenango",
+    "cityPopulation": 10000
+  }
+}

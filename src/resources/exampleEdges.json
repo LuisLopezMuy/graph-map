@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "fromNodeId": 1,
+    "toNodeId": 2,
+    "weight": 100,
+    "color": "#000000ff"
+  },
+  {
+    "id": 2,
+    "fromNodeId": 1,
+    "toNodeId": 3,
+    "weight": 100,
+    "color": "#000000ff"
+  },
+  {
+    "id": 3,
+    "fromNodeId": 2,
+    "toNodeId": 3,
+    "weight": 100,
+    "color": "#000000ff"
+  }
+]
