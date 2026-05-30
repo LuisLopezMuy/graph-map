@@ -7,7 +7,7 @@ import {
   useGetAdjacencyMatrix,
   useGetBFS,
   useGetDFS,
-  // useGetShortestRoute,
+  useGetDijkstra,
 } from "../hooks";
 import {
   Typography,
@@ -18,7 +18,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Autocomplete,
+  TextField,
+  Stack,
 } from "@mui/material";
+import { FaArrowDown } from "react-icons/fa";
 
 // TabPanel
 interface TabPanelProps {
@@ -71,7 +75,14 @@ export const AlgorithmTabs = () => {
   // DFS
   const { dfsResultText } = useGetDFS();
   // Ruta mas corta
-  //   const { shortestRoute } = useGetShortestRoute();
+  const {
+    autocompleteOptions,
+    fromValue,
+    handleFromValueChange,
+    toValue,
+    handleToValueChange,
+    dijkstraResult,
+  } = useGetDijkstra();
 
   return (
     <Box
@@ -180,7 +191,62 @@ export const AlgorithmTabs = () => {
 
       {/* Ruta mas corta */}
       <TabPanel value={value} index={4}>
-        Item Five
+        <Stack spacing={2}>
+          <Autocomplete
+            size="small"
+            options={autocompleteOptions}
+            getOptionKey={(option) => option.id}
+            getOptionLabel={(option) => option.cityName}
+            value={fromValue}
+            onChange={(
+              _event: any,
+              newValue: { id: number; cityName: string } | null,
+            ) => {
+              handleFromValueChange(newValue);
+            }}
+            renderInput={(params) => <TextField {...params} label="Inicio" />}
+          />
+          <Autocomplete
+            size="small"
+            options={autocompleteOptions}
+            getOptionKey={(option) => option.id}
+            getOptionLabel={(option) => option.cityName}
+            value={toValue}
+            onChange={(
+              _event: any,
+              newValue: { id: number; cityName: string } | null,
+            ) => {
+              handleToValueChange(newValue);
+            }}
+            renderInput={(params) => <TextField {...params} label="Destino" />}
+          />
+          <Typography variant="h6">
+            Ruta mas corta: {dijkstraResult?.distance ?? ""}
+          </Typography>
+
+          {dijkstraResult?.nodes && (
+            <Stack spacing={1}>
+              {dijkstraResult.nodes.map((node, index) => (
+                <Box
+                  sx={{
+                    backgroundColor: "#fff",
+                    py: 1,
+                    px: 3,
+                    borderRadius: 3,
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: 2,
+                  }}
+                >
+                  <FaArrowDown />
+                  <Typography variant="body2" key={index}>
+                    {node.cityName}
+                  </Typography>
+                </Box>
+              ))}
+            </Stack>
+          )}
+        </Stack>
       </TabPanel>
     </Box>
   );

@@ -264,7 +264,7 @@ export const MapPanel = () => {
             {/* Nodos */}
             {Object.entries(nodes).map(([id, node]) => {
               const labelWidth = node.cityName
-                ? node.cityName.length * 7 + 16
+                ? node.cityName.length * 7 + 30
                 : 60;
               return (
                 <g
@@ -336,7 +336,7 @@ export const MapPanel = () => {
                       pointerEvents: "none",
                     }}
                   >
-                    {node.cityName}
+                    {node.id + ". " + node.cityName}
                   </text>
                 </g>
               );
