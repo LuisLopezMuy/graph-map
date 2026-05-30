@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useStore } from "../zustand";
 import {
   createBaseEdgeModel,
@@ -103,19 +103,18 @@ export function useMapPanel() {
     }
   };
 
-  const handleMouseMoveInSVG = (x: number, y: number) => {
-    if (tempMovingNodeId) {
-      const node = nodes[tempMovingNodeId];
-      if (!node) return;
-      if (node.x !== x || node.y !== y) {
+  const handleMouseMoveInSVG = useCallback(
+    (x: number, y: number) => {
+      if (tempMovingNodeId) {
+        const node = useStore.getState().nodes[tempMovingNodeId];
+        if (!node) return;
         updateNode({ ...node, x, y });
+      } else if (tempLine) {
+        setTempLine((prev) => (prev ? { ...prev, x2: x, y2: y } : null));
       }
-    } else if (tempLine) {
-      if (tempLine.x2 !== x || tempLine.y2 !== y) {
-        setTempLine({ ...tempLine, x2: x, y2: y });
-      }
-    }
-  };
+    },
+    [tempMovingNodeId, tempLine, updateNode],
+  );
 
   const handleMouseUpInSVG = () => {
     setTempMovingNodeId(null);

@@ -96,7 +96,7 @@ export const CityDetailPanel = () => {
                 sx={{ backgroundColor: "#d3d3d3ff" }}
                 disabled={!selectedNode}
                 color="secondary"
-                label="Departamento"
+                label="Departamento o Region"
                 variant="outlined"
                 size="small"
                 fullWidth
@@ -122,12 +122,14 @@ export const CityDetailPanel = () => {
                 variant="outlined"
                 size="small"
                 fullWidth
+                slotProps={{ htmlInput: { min: 0 } }}
                 value={selectedNode?.cityPopulation ?? 0}
                 onChange={(e) => {
                   if (selectedNode) {
+                    const parsed = parseInt(e.target.value);
                     updateNode({
                       ...selectedNode,
-                      cityPopulation: parseInt(e.target.value) || 0,
+                      cityPopulation: isNaN(parsed) || parsed < 0 ? 0 : parsed,
                     });
                   }
                 }}
@@ -165,24 +167,28 @@ export const CityDetailPanel = () => {
               </Typography>
               <TextField
                 disabled={!selectedEdge}
+                sx={{ backgroundColor: "#d3d3d3ff" }}
                 color="secondary"
                 type="number"
                 label="Distancia (km)"
                 variant="outlined"
                 size="small"
                 fullWidth
+                slotProps={{ htmlInput: { min: 0 } }}
                 value={selectedEdge?.weight ?? 0}
                 onChange={(e) => {
                   if (selectedEdge) {
+                    const parsed = parseInt(e.target.value);
                     updateEdge({
                       ...selectedEdge,
-                      weight: parseInt(e.target.value) || 0,
+                      weight: isNaN(parsed) || parsed < 0 ? 0 : parsed,
                     });
                   }
                 }}
               />
               <MuiColorInput
                 disabled={!selectedEdge}
+                sx={{ backgroundColor: "#d3d3d3ff" }}
                 color="secondary"
                 label="Color"
                 variant="outlined"

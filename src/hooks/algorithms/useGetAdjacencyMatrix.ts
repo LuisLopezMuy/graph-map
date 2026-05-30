@@ -17,14 +17,21 @@ type AdjacencyMatrix = Record<
 
 export const useGetAdjacencyMatrix = (): {
   adjacencyMatrix: AdjacencyMatrix;
+  matrixNodeOrder: number[];
 } => {
   const nodes = useStore((state) => state.nodes);
   const edges = useStore((state) => state.edges);
 
+  const matrixNodeOrder = useMemo(() => {
+    return Object.keys(nodes)
+      .map(Number)
+      .sort((a, b) => a - b);
+  }, [nodes]);
+
   const adjacencyMatrix: AdjacencyMatrix = useMemo(() => {
     const matrix: AdjacencyMatrix = {};
-    Object.entries(nodes).forEach(([, node]) => {
-      matrix[node.id] = { cityName: node.cityName, conections: {} };
+    matrixNodeOrder.forEach((nodeId) => {
+      matrix[nodeId] = { cityName: nodes[nodeId].cityName, conections: {} };
     });
     edges.forEach((edge) => {
       matrix[edge.fromNodeId].conections[edge.toNodeId] = {
@@ -39,5 +46,5 @@ export const useGetAdjacencyMatrix = (): {
     return matrix;
   }, [nodes, edges]);
 
-  return { adjacencyMatrix: adjacencyMatrix };
+  return { adjacencyMatrix, matrixNodeOrder };
 };
